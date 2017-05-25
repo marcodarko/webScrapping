@@ -1,0 +1,33 @@
+<div class="jumbotron text-center" id="hero"> 
+        <h1>My Articles</h1>
+        <p>New York Times</p>
+</div>
+<div class="container" id="tableContainer">
+  <table class="table">
+     {{#if articles}}
+      <tbody>
+        {{#each articles}}
+         
+          <tr>
+            <td><a href="{{this.link}}" target="_blank">{{this.headline}}</a></td>
+            <td>{{this.summary}}</td>
+            {{#if this.comments}}
+            <td>{{this.comments}}</td>
+            {{else}}
+            <td> No Comments yet</td>
+            {{/if}}
+            <td>
+            <form action="/comment/{{this._id}}?_method=PUT" method="POST">
+            <button type="submit" class="btn btn-default navbar-btn">ADD COMMENT</button>
+            </td>
+          </tr>
+        {{/each}}
+
+      </tbody>
+      {{else}}
+      <td class="text-center"> Looks like you haven't saved any articles</td>
+      {{/if}}
+    
+
+    </table>
+  </div>

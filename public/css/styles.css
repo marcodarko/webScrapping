@@ -1,0 +1,63 @@
+#hero{
+background-color: transparent;
+color: white;
+font-family: sans-serif;
+
+}
+
+#tableContainer{
+
+overflow: scroll;
+height: 40%;
+background-color: rgba(0,0,0,.6);
+color: white;
+}
+
+.table tbody tr:hover{
+	background-color: rgba(0,0,0, .2);
+}
+
+.nav.active{
+	color: hotpink;
+}
+
+#resultsBar{
+	background-color: rgba(0,0,0,.8);
+	color: white;
+	padding: 5px;
+}
+
+a{
+	text-decoration: none;
+	color: white;
+}
+
+.btn{
+	background-color: transparent;
+	border: 2px solid #ff5c5c;
+	border-radius: 5px;
+	color: #ff5c5c;
+}
+
+.btn:hover{
+	background-color: transparent;
+	border:2px solid white;
+	color:white;
+}
+
+a:hover{
+	color: pink;
+	text-decoration: none;
+}
+
+html, body{
+	top:0;
+	bottom: 0;
+	height: 100%;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#febbbb+0,fe9090+60,fe9090+60 */
+background: rgb(254,187,187); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(254,187,187,1) 0%, rgba(254,144,144,1) 60%, rgba(254,144,144,1) 60%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(254,187,187,1) 0%,rgba(254,144,144,1) 60%,rgba(254,144,144,1) 60%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(254,187,187,1) 0%,rgba(254,144,144,1) 60%,rgba(254,144,144,1) 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#febbbb', endColorstr='#fe9090',GradientType=0 ); /* IE6-9 */
+}

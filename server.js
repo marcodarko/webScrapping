@@ -4,7 +4,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
-
+var methodOverride = require('method-override');
 // Initialize Express
 var app = express();
 
@@ -18,16 +18,17 @@ app.listen(PORT, function(err, res) {
 
 // Use morgan and body parser with our app
 app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(methodOverride("_method"));
 
 // HANDLEBARS
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
-
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

@@ -43,11 +43,14 @@ db.once("open", function() {
 
 //db.Articles.create({headline:"this", headlineLink: "that", summary:"all of this"});
 
+router.get('/', function(req, res){
+  res.render('index');
+});
 
 // Retrieve data from the db
-router.get("/all", function(req, res) {
+router.get("/saved", function(req, res) {
   // Find all results from the Articles collection in the db
-  Article.find( function(error, found) {
+  Article.find({saved: true}, function(error, found) {
     // Throw any errors to the console
     if (error) {
       res.render('index');
@@ -57,13 +60,13 @@ router.get("/all", function(req, res) {
     	var hbsObject={
         articles: found
       	}
-      res.render("index", hbsObject);
+      res.render("saved", hbsObject);
     }
   });
 });
 
 // Scrape data from one site and place it into the mongodb db
-router.get("/", function(req, res) {
+router.get("/scrape", function(req, res) {
   // Make a request for the news section of ycombinator
   request("http://www.nytimes.com/pages/todayspaper/index.html?module=SectionsNav&action=click&version=BrowseTree&region=TopBar&contentCollection=More/Today%27s%20Paper&contentPlacement=2&pgtype=Homepage?campaignid=4Q9QY&gclid=CjwKEAjwu4_JBRDpgs2RwsCbt1MSJABOY8anz1FwAitlmLi6pOGAyWtuKM6k4u2KMufytJBNesw7VBoCdSzw_wcB", function(error, response, html) {
     // Load the html body from request into cheerio
@@ -109,7 +112,41 @@ router.get("/", function(req, res) {
   });
 
   // This will send a "Scrape Complete" message to the browser
-   res.render('index');
+   res.redirect('/results');
+});
+
+router.get('/results', function(req, res){
+
+    // Find all results from the Articles collection in the db
+  Article.find({saved: false},function(error, found) {
+    // Throw any errors to the console
+    if (error) {
+      res.send('Error retrieving articles');
+    }
+    // If there are no errors, send the data to the browser as a json
+    else {
+      var hbsObject={
+        articles: found
+        }
+      res.render("results", hbsObject);
+    }
+  });
+
+});
+
+router.put('/id/:id', function(req, res){
+
+  var ID= req.params.id;
+
+  Article.update({_id: ID},{ $set:{saved: true} }, function(error, updated){
+      if (error) {
+      res.send('Error saving article');
+    }
+    else{
+      res.redirect('/results');
+    }
+  })
+
 });
 
 // Export routes for server.js to use.

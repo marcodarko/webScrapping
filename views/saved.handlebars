@@ -1,9 +1,9 @@
 <div class="jumbotron text-center" id="hero"> 
         <h1>My Articles</h1>
-        <p>New York Times</p>
+        <p>The New York Times</p>
 </div>
-<div class="container" id="tableContainer">
-  <table class="table">
+<div class="container" id="savedContainer">
+  <!-- <table class="table">
      {{#if articles}}
       <tbody>
         {{#each articles}}
@@ -29,5 +29,37 @@
       {{/if}}
     
 
-    </table>
+    </table> -->
+
+	{{#if articles}}
+	{{#each articles}}
+		<div class="jumbotron savedArticle">
+			<span class="date">{{this.date}}</span>
+			<h3><a href="{{this.link}}" target="_blank">{{this.headline}}</a></h3>
+			<p>{{this.summary}}</p>
+			<hr>
+			{{#if this.comments.length}}
+			<p>Comment: {{this.comments.0.comment}}</p>
+			{{else}}
+			<form action="/comment/{{this._id}}?_method=PUT" method="POST">
+				<textarea style="width: 100%" placeholder="Comment on this" name="comment" class="textArea">
+					
+				</textarea>
+				<br>
+				<button class="btn btn-default" type="submit">SAVE COMMENT</button>
+			</form>
+			<br>
+			 <form action="/remove/{{this._id}}?_method=PUT" method="POST">
+            <button type="submit" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> REMOVE ARTICLE</button>
+            </form>
+			{{/if}}
+		</div>
+	
+	{{/each}}
+	{{else}}
+	<div class="jumbotron text-center" id="noSaved"> 
+        <h3>No Saved Articles</h3>
+	</div>
+	{{/if}}
+
   </div>

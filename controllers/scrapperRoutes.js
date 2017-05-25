@@ -50,10 +50,10 @@ router.get('/', function(req, res){
 // Retrieve data from the db
 router.get("/saved", function(req, res) {
   // Find all results from the Articles collection in the db
-  Article.find({saved: true}, function(error, found) {
+  Article.find({saved: true}).populate('comments').exec(function(error, found) {
     // Throw any errors to the console
     if (error) {
-      res.render('index');
+      res.render('error');
     }
     // If there are no errors, send the data to the browser as a json
     else {
@@ -99,20 +99,15 @@ router.get("/scrape", function(req, res) {
         function(error, saved) {
           // If there's an error during this query
           if (error) {
-            return res.end();
+            console.log("ERROR: "+error);
           }
-          // Otherwise,
-          // else {
           
-          //   res.send(saved);
-          // }
         });
       }
     });
   });
-
-  // This will send a "Scrape Complete" message to the browser
-   res.redirect('/results');
+// once done, redirect to results view 
+  res.redirect('/results');
 });
 
 router.get('/results', function(req, res){
@@ -121,7 +116,7 @@ router.get('/results', function(req, res){
   Article.find({saved: false},function(error, found) {
     // Throw any errors to the console
     if (error) {
-      res.send('Error retrieving articles');
+      return res.render('error');
     }
     // If there are no errors, send the data to the browser as a json
     else {
@@ -140,7 +135,7 @@ router.put('/id/:id', function(req, res){
 
   Article.update({_id: ID},{ $set:{saved: true} }, function(error, updated){
       if (error) {
-      res.send('Error saving article');
+      res.render('error');
     }
     else{
       res.redirect('/results');
@@ -148,6 +143,43 @@ router.put('/id/:id', function(req, res){
   })
 
 });
+
+router.put('/remove/:id', function(req, res){
+
+  var ID= req.params.id;
+
+  Article.update({_id: ID},{ $set:{saved: false} }, function(error, updated){
+      if (error) {
+      res.render('error');
+    }
+    else{
+      res.redirect('/saved');
+    }
+  })
+
+});
+
+router.put('/comment/:id', function(req, res){
+
+  var ID= req.params.id;
+  var YourComment= req.body.comment;
+
+  var newComment = new Comment({
+    comment: YourComment
+  });
+
+  Article.findOneAndUpdate({_id: ID}, { $push: { "comments": newComment } }, function(error, documentUpdated) {
+      if (error) {
+      res.render('error');
+    }
+    else{
+      res.redirect('/saved');
+    }
+  });
+
+});
+
+
 
 // Export routes for server.js to use.
 module.exports = router;

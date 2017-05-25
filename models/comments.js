@@ -7,11 +7,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 // Create a NoteSchema with the Schema class
 var CommentSchema = new Schema({
-  // title: a string
-  commentor: {
-    type: String,
-    default: "Annonymous"
-  },
+ 
   // body: a string
   comment: {
     type: String

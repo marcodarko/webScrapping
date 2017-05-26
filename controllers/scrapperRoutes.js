@@ -50,7 +50,9 @@ router.get('/', function(req, res){
 // Retrieve data from the db
 router.get("/saved", function(req, res) {
   // Find all results from the Articles collection in the db
-  Article.find({saved: true}).populate('comments').exec(function(error, found) {
+  Article.find({saved: true}, function(error, found) {
+
+    console.log("FOUND: "+ found);
     // Throw any errors to the console
     if (error) {
       res.render('error');

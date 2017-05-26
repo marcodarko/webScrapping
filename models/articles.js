@@ -25,12 +25,10 @@ var ArticleSchema = new Schema({
       default: Date.now
    },
     // notes property for the user
-   comments: [{
-    // Store ObjectIds in the array
-    type: Schema.Types.ObjectId,
-    // The ObjectIds will refer to the ids in the Note model
-    ref: "Comments"
-  }],
+   comments: {
+      type: Array
+   }
+   ,
     saved: {
       type: Boolean,
       default: false

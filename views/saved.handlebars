@@ -39,7 +39,9 @@
 			<p>{{this.summary}}</p>
 			<hr>
 			{{#if this.comments.length}}
-			<p>Comment: {{this.comments.0.comment}}</p>
+				{{#each this.comments}}
+					<p>Comment: {{this.comments.[key].comment}}</p>
+				{{/each}}
 			{{else}}
 			<form action="/comment/{{this._id}}?_method=PUT" method="POST">
 				<textarea style="width: 100%" placeholder="Comment on this" name="comment" class="textArea">

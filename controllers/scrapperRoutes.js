@@ -13,15 +13,14 @@ var Promise = require("bluebird");
 
 mongoose.Promise = Promise;
 
-
 var router = express.Router();
 
 // Create the Schema class
 var Schema = mongoose.Schema;
 
 // URI's
-//var uri = "mongodb://<dbusername>:<password>@ds149551.mlab.com:49551/heroku_zlww6fwt";
-var uri = "mongodb://localhost/zoo";
+var uri = "mongodb://heroku_zlww6fwt:s9g01t0s70ciau94fu9a36hbat@ds149551.mlab.com:49551/heroku_zlww6fwt";
+//var uri = "mongodb://localhost/zoo";
 
 mongoose.connect(uri);
 
@@ -52,7 +51,7 @@ router.get("/saved", function(req, res) {
   // Find all results from the Articles collection in the db
   Article.find({saved: true}, function(error, found) {
 
-    console.log("FOUND: "+ found);
+    //console.log("FOUND: "+ found);
     // Throw any errors to the console
     if (error) {
       res.render('error');
@@ -76,11 +75,11 @@ router.get("/scrape", function(req, res) {
     // For each element with a "title" class
     $(".story").each(function(i, element) {
 
-    	console.log("found item #"+i);
+    	//console.log("found item #"+i);
     	 // Save the text of each link enclosed in the current element
       var headline = $(this).find("a").text();
 
-      console.log(headline);
+      //console.log(headline);
       // Save the text of each link enclosed in the current element
       var headlineLink = $(this).find("a").attr("href");
       // Save the href value of each link enclosed in the current element
@@ -89,7 +88,7 @@ router.get("/scrape", function(req, res) {
       // If this title element had both a title and a link
       if (headline && headlineLink && summary) {
 
-      	console.log("saving one item!");
+      	//console.log("saving one item!");
 
       	var newArticle = new Article({
           headline: headline,

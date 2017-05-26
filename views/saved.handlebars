@@ -38,23 +38,25 @@
 			<h3><a href="{{this.link}}" target="_blank">{{this.headline}}</a></h3>
 			<p>{{this.summary}}</p>
 			<hr>
-			{{#if this.comments.length}}
+			
+				<h3>Comments</h3>
 				{{#each this.comments}}
-					<p>Comment: {{this.comments.[key].comment}}</p>
+					<p><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {{this.comment}}</p>
 				{{/each}}
-			{{else}}
+			<hr>
 			<form action="/comment/{{this._id}}?_method=PUT" method="POST">
 				<textarea style="width: 100%" placeholder="Comment on this" name="comment" class="textArea">
 					
 				</textarea>
 				<br>
-				<button class="btn btn-default" type="submit">SAVE COMMENT</button>
+				<br>
+				<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> SAVE COMMENT</button>
 			</form>
-			<br>
+		
 			 <form action="/remove/{{this._id}}?_method=PUT" method="POST">
             <button type="submit" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> REMOVE ARTICLE</button>
             </form>
-			{{/if}}
+			
 		</div>
 	
 	{{/each}}
